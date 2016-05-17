@@ -13,7 +13,7 @@ const node = (
 	<Root store={store} history={history} />
 	);
 
-let token = localstorage.getItem('token');
+let token = localStorage.getItem('token');
 
 if(token !== null) {
 	store.dispatch(loginUserSuccess(token));

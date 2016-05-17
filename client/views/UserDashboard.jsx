@@ -3,40 +3,40 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions';
 
-export class UserDashboard extends React.Component {
+class UserDashboard extends React.Component {
 
-    componentWillMount () {
-        this.fetchData();
-    }
+  componentWillMount () {
+    this.fetchData();
+  }
 
-    fetchData () {
-        let token = this.props.authData.token;
-        this.props.actions.fetchProtectedData(token);
-    }
+  fetchData () {
+    let token = this.props.authData.token;
+    this.props.actions.fetchProtectedData(token);
+  }
 
-    render () {
-        return (
-            <div>
-                {this.props.isFetching === true
-                    ? <h1>Loading data...</h1>
-                    : <div>
-                        <h1>Welcome back,
-                            {this.props.authData.userName}!</h1>
-                        <h3>{this.props.data}</h3>
-                    </div>
-    }
-            </div>
-        );
-    }
+  render () {
+    return (
+      <div>
+        {this.props.isFetching === true
+          ? <h1>Loading data...</h1>
+          : <div>
+            <h1>Welcome back,
+              {this.props.authData.userName}!</h1>
+            <h3>{this.props.data}</h3>
+          </div>
+        }
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
-    data: state.data.data,
-    isFetching: state.data.isFetching
+  data: state.data.data,
+  isFetching: state.data.isFetching
 });
 
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(actionCreators, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProtectedView);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDashboard);

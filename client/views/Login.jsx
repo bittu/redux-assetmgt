@@ -3,48 +3,50 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions';
 
+import { Card, Row, Col, Input, Button, Icon } from 'react-materialize';
+
 export class LoginView extends React.Component {
 
   constructor(props) {
     super(props);
     const redirectRoute = this.props.location.query.redirect || '/login';
     this.state = {
-      email: '',
-      password: '',
+      EmployeeID: '',
+      Password: '',
       redirectTo: redirectRoute
     };
   }
 
   login(e) {
       e.preventDefault();
-      this.props.actions.loginUser(this.state.email, this.state.password, this.state.redirectTo);
+      if(!this.props.isAuthenticating) {
+        this.props.actions.loginUser(this.state.EmployeeID, this.state.Password, this.state.redirectTo);
+      }
+  }
+
+  employeeIDChange(e) {
+    this.setState({EmployeeID: e.target.value.replace(/[^\d]/ig, '').substring(0, 7)});
+  }
+
+  passwordChange(e) {
+    this.setState({Password: e.target.value});
   }
 
   render () {
     return (
-      <div className='col-xs-12 col-md-6 col-md-offset-3'>
-        <h3>Log in to view protected content!</h3>
-        <p>Hint: hello@test.com / test</p>
-        {this.props.statusText ? <div className='alert alert-info'>{this.props.statusText}</div> : ''}
-        <form role='form'>
-        <div className='form-group'>
-            <input type='text'
-              className='form-control input-lg'
-              valueLink={this.linkState('email')}
-              placeholder='Email' />
-            </div>
-          <div className='form-group'>
-            <input type='password'
-              className='form-control input-lg'
-              valueLink={this.linkState('password')}
-              placeholder='Password' />
-          </div>
-          <button type='submit'
-            className='btn btn-lg'
-            disabled={this.props.isAuthenticating}
-            onClick={this.login.bind(this)}>Submit</button>
-      </form>
-    </div>
+      <Row>
+        <Col s={4} offset='s4'>
+          <Card title='Login' className='loginCard'>
+            <form role="form" onSubmit={this.login.bind(this)}>
+              <Row>
+                <Input s={12} label="EmployeeID" value={this.state.EmployeeID} onChange={this.employeeIDChange.bind(this)}/>
+                <Input type="password" label="Password" s={12} value={this.state.Password} onChange={this.passwordChange.bind(this)}/>
+                <Button type="submit" disabled={this.props.isAuthenticating} waves='light'>Submit<Icon right>send</Icon></Button>
+              </Row>
+            </form>
+          </Card>
+        </Col>
+      </Row>
     );
   }
 }

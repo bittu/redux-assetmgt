@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} from '../constants';
+import C from '../constants';
 import { push } from 'react-router-redux'
 import jwtDecode from 'jwt-decode';
 import fetch from 'isomorphic-fetch';
@@ -7,7 +7,7 @@ import fetch from 'isomorphic-fetch';
 export function loginUserSuccess(token) {
   localStorage.setItem('token', token);
   return {
-    type: LOGIN_USER_SUCCESS,
+    type: C.LOGIN_USER_SUCCESS,
     payload: {
       token: token
     }
@@ -16,25 +16,27 @@ export function loginUserSuccess(token) {
 
 export function loginUserFailure(error) {
   localStorage.removeItem('token');
+  console.log(error);
   return {
-    type: LOGIN_USER_FAILURE,
+    type: C.LOGIN_USER_FAILURE,
     payload: {
       status: error.response.status,
-      statusText: error.response.statusText
+      statusText: error.response.statusText,
+      response: error
     }
   }
 }
 
 export function loginUserRequest() {
   return {
-    type: LOGIN_USER_REQUEST
+    type: C.LOGIN_USER_REQUEST
   }
 }
 
 export function logout() {
   localStorage.removeItem('token');
   return {
-    type: LOGOUT_USER
+    type: C.LOGOUT_USER
   }
 }
 
@@ -45,17 +47,17 @@ export function logoutAndRedirect() {
   }
 }
 
-export function loginUser(email, password, redirect="/") {
+export function loginUser(EmployeeID, Password, redirect="/") {
   return function(dispatch) {
     dispatch(loginUserRequest());
-    return fetch('/auth/getToken/', {
+    return fetch('/login', {
       method: 'post',
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-        body: JSON.stringify({email: email, password: password})
+        body: JSON.stringify({EmployeeID: EmployeeID, Password: Password})
       })
       .then(checkHttpStatus)
       .then(parseJSON)
@@ -81,7 +83,7 @@ export function loginUser(email, password, redirect="/") {
 
 export function receiveProtectedData(data) {
   return {
-    type: RECEIVE_PROTECTED_DATA,
+    type: C.RECEIVE_PROTECTED_DATA,
     payload: {
       data: data
     }
@@ -90,7 +92,7 @@ export function receiveProtectedData(data) {
 
 export function fetchProtectedDataRequest() {
   return {
-    type: FETCH_PROTECTED_DATA_REQUEST
+    type: C.FETCH_PROTECTED_DATA_REQUEST
   }
 }
 
