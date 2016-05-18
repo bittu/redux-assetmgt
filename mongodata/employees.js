@@ -187,7 +187,7 @@ function addData(callback1) {
                 console.log('OSVersion saved');
                 callback2(null, 'OSVersion');
             });
-        }/*,
+        },
         function(callback2) {
             Employee.create(employeeData, function(err) {
                 if(err) {
@@ -197,7 +197,7 @@ function addData(callback1) {
                 console.log('Employee saved');
                 callback2(null, 'Employee');
             });
-        }*/
+        }
         ], function(err, results){if(err){console.log(err); return;} console.log('All added');console.log(results); callback1(null, 'Added')});
 }
 

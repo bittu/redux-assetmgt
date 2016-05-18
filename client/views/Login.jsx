@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions';
 
-import { Card, Row, Col, Input, Button, Icon } from 'react-materialize';
-
 export class LoginView extends React.Component {
 
   constructor(props) {
@@ -19,13 +17,16 @@ export class LoginView extends React.Component {
 
   login(e) {
       e.preventDefault();
+      if(!this.state.EmployeeID || !this.state.Password) {
+
+      }
       if(!this.props.isAuthenticating) {
         this.props.actions.loginUser(this.state.EmployeeID, this.state.Password, this.state.redirectTo);
       }
   }
 
   employeeIDChange(e) {
-    this.setState({EmployeeID: e.target.value.replace(/[^\d]/ig, '').substring(0, 7)});
+    this.setState({EmployeeID: e.target.value.replace(/[^\d]/ig, '')});
   }
 
   passwordChange(e) {
@@ -34,19 +35,49 @@ export class LoginView extends React.Component {
 
   render () {
     return (
-      <Row>
-        <Col s={4} offset='s4'>
-          <Card title='Login' className='loginCard'>
-            <form role="form" onSubmit={this.login.bind(this)}>
-              <Row>
-                <Input s={12} label="EmployeeID" value={this.state.EmployeeID} onChange={this.employeeIDChange.bind(this)}/>
-                <Input type="password" label="Password" s={12} value={this.state.Password} onChange={this.passwordChange.bind(this)}/>
-                <Button type="submit" disabled={this.props.isAuthenticating} waves='light'>Submit<Icon right>send</Icon></Button>
-              </Row>
-            </form>
-          </Card>
-        </Col>
-      </Row>
+      <div className="row">
+        <div className="col s4 offset-s4">
+          <div className="card">
+            <div className="card-content">
+              <span className="card-title">Login</span>
+              <form role="form" onSubmit={this.login.bind(this)}>
+                <div className="row">
+                  <div className="input-field col s12">
+                    <input id="EmployeeID" type="text" className="validate"
+                      value={this.state.EmployeeID}
+                      onChange={this.employeeIDChange.bind(this)}
+                      maxLength="7" required
+                    />
+                    <label for="EmployeeID">EmployeeID</label>
+                  </div>
+                  <div className="input-field col s12">
+                    <input id="Password" type="password" className="validate"
+                      value={this.state.Password}
+                      onChange={this.passwordChange.bind(this)} required
+                    />
+                    <label for="Password">Password</label>
+                  </div>
+                  <div className="col s4">
+                    <button 
+                      className={"btn waves-effect waves-light" + (this.props.isAuthenticating ? " disabled": "")}
+                      type="submit" name="action"
+                      disabled={this.props.isAuthenticating}
+                    >
+                      Submit
+                      <i className="material-icons right">send</i>
+                    </button>
+                  </div>
+                  <div className="col s8">
+                    <div className={"card-panel teal" + (this.props.statusText ? '' : " hide")}>
+                      <span className="white-text">{this.props.statusText}</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

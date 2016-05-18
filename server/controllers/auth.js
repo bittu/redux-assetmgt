@@ -17,12 +17,13 @@ var auth = {
 		if (!employee || !employee.EmployeeID || !employee.Password) {
 			return res.status(401).json({"error": true, "message": "Invalid credentials"});
 		}
-
+		console.log(employee);
 		Employee.findOne({EmployeeID: employee.EmployeeID}, function(err, data) {
 			if(err) {
 				console.log(err);
 				return res.status(500).json({"error": true, "message": err});
 			}
+			console.log(data);
 
 			if(!data) {
 				return res.status(401).json({"error": true, "message": "Invalid credentials"});
@@ -33,6 +34,7 @@ var auth = {
 					console.log(err);
 					return res.status(500).json({"error": true, "message": err});
 				}
+				console.log(isAuthenticate);
 				if(!isAuthenticate) {
 					console.log("Attempt failed to login with " + employee.EmployeeID);
 					return res.status(200).json({"error": true, "message": "Invalid credentials"});
@@ -43,7 +45,7 @@ var auth = {
 
 				var token = generateAndStoreToken(req, data);
 				res.set('Authorization', token);
-				return res.status(200).send(true);
+				return res.status(200).json({"token": token});
 			})
 
 		});

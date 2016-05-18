@@ -57,7 +57,7 @@ export function loginUser(EmployeeID, Password, redirect="/") {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-        body: JSON.stringify({EmployeeID: EmployeeID, Password: Password})
+        body: JSON.stringify({payload: {EmployeeID: EmployeeID, Password: Password}})
       })
       .then(checkHttpStatus)
       .then(parseJSON)

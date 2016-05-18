@@ -5,7 +5,7 @@ import jwtDecode from 'jwt-decode';
 
 const initialState = {
   token: null,
-  userName: null,
+  employee: null,
   isAuthenticated: false,
   isAuthenticating: false,
   statusText: null
@@ -23,18 +23,18 @@ export default createReducer(initialState, {
       'isAuthenticating': false,
       'isAuthenticated': true,
       'token': payload.token,
-      'userName': jwtDecode(payload.token).userName,
-      'isAdmin': jwtDecode(payload.token).isAdmin,
+      'employee': jwtDecode(payload.token).employee,
+      'isAdmin': jwtDecode(payload.token).Admin,
       'statusText': 'You have been successfully logged in.'
     });
   },
   [C.LOGIN_USER_FAILURE]: (state, payload) => {
     console.log(payload)
     return Object.assign({}, state, {
-      'isAuthenticating': true,
+      'isAuthenticating': false,
       'isAuthenticated': false,
       'token': null,
-      'userName': null,
+      'employee': null,
       'isAdmin': null,
       'statusText': `Authentication Error: ${payload.status} ${payload.statusText}`
     });
@@ -43,7 +43,7 @@ export default createReducer(initialState, {
     return Object.assign({}, state, {
       'isAuthenticated': false,
       'token': null,
-      'userName': null,
+      'employee': null,
       'isAdmin': null,
       'statusText': 'You have been successfully logged out.'
     });

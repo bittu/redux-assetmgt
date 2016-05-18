@@ -4,12 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {logoutAndRedirect} from '../actions';
 
-connect((state) => {
-  return {
-   isAuthenticated: state.auth.isAuthenticated
-  };
-})
-export default class App extends React.Component {
+class App extends React.Component {
 
   render () {
 
@@ -36,3 +31,10 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default connect((state) => {
+  return {
+   isAuthenticated: state.auth.isAuthenticated,
+   employee: state.auth.employee
+  };
+})(App);
