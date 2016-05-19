@@ -35,9 +35,9 @@ export class LoginView extends React.Component {
 
   render () {
     return (
-      <div className="row">
-        <div className="col s4 offset-s4">
-          <div className="card">
+      <div className="row valign-wrapper">
+        <div className="col s4 offset-s4 valign">
+          <div className="card login-form">
             <div className="card-content">
               <span className="card-title">Login</span>
               <form role="form" onSubmit={this.login.bind(this)}>
@@ -59,7 +59,7 @@ export class LoginView extends React.Component {
                   </div>
                   <div className="col s4">
                     <button 
-                      className={"btn waves-effect waves-light" + (this.props.isAuthenticating ? " disabled": "")}
+                      className={"btn blue waves-effect waves-light" + (this.props.isAuthenticating ? " disabled": "")}
                       type="submit" name="action"
                       disabled={this.props.isAuthenticating}
                     >
@@ -68,7 +68,7 @@ export class LoginView extends React.Component {
                     </button>
                   </div>
                   <div className="col s8">
-                    <div className={"card-panel teal" + (this.props.statusText ? '' : " hide")}>
+                    <div className={"card-panel red form-error" + (this.props.statusText ? ' shake' : " hide")}>
                       <span className="white-text">{this.props.statusText}</span>
                     </div>
                   </div>

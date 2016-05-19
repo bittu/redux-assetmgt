@@ -36,7 +36,7 @@ export default createReducer(initialState, {
       'token': null,
       'employee': null,
       'isAdmin': null,
-      'statusText': `Authentication Error: ${payload.status} ${payload.statusText}`
+      'statusText': `${payload.status === 401 ? 'Invalid Credentials' : '(' + payload.status + ') ' + payload.statusText}`
     });
   },
   [C.LOGOUT_USER]: (state, payload) => {
@@ -45,7 +45,7 @@ export default createReducer(initialState, {
       'token': null,
       'employee': null,
       'isAdmin': null,
-      'statusText': 'You have been successfully logged out.'
+      'statusText': null
     });
   }
 });

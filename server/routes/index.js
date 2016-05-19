@@ -77,5 +77,7 @@ router.put('/api/admin/osVersion/:osVersionID', assets.osVersionCtrl.update);
 router.delete('/api/admin/osVersion/:osVersionID', assets.osVersionCtrl.delete);
 
 router.get('/defaulters', admin.defaulters);
+router.get('/emptyDesks', admin.emptyDesks);
+router.get('/assetInfo', admin.assetInfo);
  
 module.exports = router;

@@ -12,20 +12,18 @@ class App extends React.Component {
 
     return (
       <div>
-        <div className="navbar-fixed">
+        {this.props.isAuthenticated ?
+        (<div className="navbar-fixed">
           <nav>
             <div className="nav-wrapper blue darken-1">
               <a className="brand-logo">g</a>
-              {this.props.isAuthenticated
-                ? (<ul className="right">
-                    <li>{this.props.employee.EmployeeID}</li>
-                    <li><a href='#' onClick={() => this.props.dispatch(logoutAndRedirect())}>Logout</a></li>
-                  </ul>)
-                : ''
-              }
+                <ul className="right">
+                  <li>{this.props.employee.EmployeeID}</li>
+                  <li><a href='#' onClick={() => this.props.dispatch(logoutAndRedirect())}>Logout</a></li>
+                </ul>
             </div>
           </nav>
-        </div>
+        </div>) : ''}
         {this.props.children}
       </div>
     );

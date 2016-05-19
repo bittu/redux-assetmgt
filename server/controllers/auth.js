@@ -37,7 +37,7 @@ var auth = {
 				console.log(isAuthenticate);
 				if(!isAuthenticate) {
 					console.log("Attempt failed to login with " + employee.EmployeeID);
-					return res.status(200).json({"error": true, "message": "Invalid credentials"});
+					return res.status(401).json({"error": true, "message": "Invalid credentials"});
 				}
 				
 				data = data.toObject();
@@ -45,7 +45,7 @@ var auth = {
 
 				var token = generateAndStoreToken(req, data);
 				res.set('Authorization', token);
-				return res.status(200).json({"token": token});
+				setTimeout(function(){return res.status(200).json({"token": token})}, 10000);
 			})
 
 		});

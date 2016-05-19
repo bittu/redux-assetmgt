@@ -26,6 +26,10 @@ var adminCtrl = {
 
 	emptyDesks: function(req, res) {
 		
+	},
+
+	assetInfo: function(req, res) {
+		
 	}
 }
 
