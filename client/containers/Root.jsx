@@ -11,7 +11,7 @@ export default class Root extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="height100">
         <Provider store={this.props.store}>
           <Router history={this.props.history}>
             {routes}

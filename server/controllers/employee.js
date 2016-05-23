@@ -1,4 +1,7 @@
+var async = require('async');
 var Employee = require('../models/Employee');
+var EmployeeAsset = require('../models/EmployeeAsset');
+var EmployeeDesk = require('../models/EmployeeDesk');
 
 var employeeCtrl = {
 	get: function(req, res) {
@@ -69,8 +72,45 @@ var employeeCtrl = {
 			}
 			return res.status(200).json({"message": "Employee removed"});
 		});
+	},
+
+	getData: function(req, res) {
+
+		var employeeID = req.params.employeeID;
+
+		async.parallel({
+				desk: function(callback) {
+					EmployeeDesk.find({EmployeeID: employeeID})
+											.populate('DeskNo')
+											.exec(function(err, data) {
+						if(err) {
+							console.log(err);
+							callback(err, null);
+							return;
+						}
+						callback(null, data);
+					})
+				},
+				assets: function(callback) {
+					EmployeeAsset.find({EmployeeID: employeeID}, function(err, data) {
+						if(err) {
+							console.log(err);
+							callback(err, null);
+							return;
+						}
+						callback(null, data);
+					})
+				}
+			},
+			function(err, results) {
+				if(err) {
+					return res.status(500).json({"error": true, "message": err});
+				}
+				res.status(200).json(results);
+			}
+		)
 	}
-}
+} 
 
 
 module.exports = employeeCtrl;

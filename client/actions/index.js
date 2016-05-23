@@ -47,6 +47,12 @@ export function logoutAndRedirect() {
   }
 }
 
+export function alreadyLoginRedirect() {
+  return (dispatch, state) => {
+    dispatch(push('/'));
+  }
+}
+
 export function loginUser(EmployeeID, Password, redirect="/") {
   return function(dispatch) {
     dispatch(loginUserRequest());
@@ -96,20 +102,20 @@ export function fetchProtectedDataRequest() {
   }
 }
 
-export function fetchProtectedData(token) {
+export function userData(token, employeeID) {
 
   return (dispatch, state) => {
     dispatch(fetchProtectedDataRequest());
-    return fetch('/getData/', {
+    return fetch(`/api/employee/${employeeID}`, {
         credentials: 'include',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `${token}`
         }
       })
       .then(checkHttpStatus)
       .then(parseJSON)
       .then(response => {
-        dispatch(receiveProtectedData(response.data));
+        dispatch(receiveProtectedData(response));
       })
       .catch(error => {
         if(error.response.status === 401) {

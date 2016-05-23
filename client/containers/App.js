@@ -11,7 +11,7 @@ class App extends React.Component {
     const { dispatch } = this.props;
 
     return (
-      <div>
+      <div className="height100">
         {this.props.isAuthenticated ?
         (<div className="navbar-fixed">
           <nav>

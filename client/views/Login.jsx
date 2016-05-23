@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions';
+import { push } from 'react-router-redux'
 
 export class LoginView extends React.Component {
 
@@ -13,6 +14,12 @@ export class LoginView extends React.Component {
       Password: '',
       redirectTo: redirectRoute
     };
+  }
+
+  componentWillMount() {
+    if(this.props.isAuthenticated) {
+      this.props.actions.alreadyLoginRedirect();
+    }
   }
 
   login(e) {
@@ -35,9 +42,9 @@ export class LoginView extends React.Component {
 
   render () {
     return (
-      <div className="row valign-wrapper">
+      <div className="row valign-wrapper login-wrapper height100">
         <div className="col s4 offset-s4 valign">
-          <div className="card login-form">
+          <div className="card">
             <div className="card-content">
               <span className="card-title">Login</span>
               <form role="form" onSubmit={this.login.bind(this)}>
@@ -84,7 +91,8 @@ export class LoginView extends React.Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticating   : state.auth.isAuthenticating,
-  statusText         : state.auth.statusText
+  statusText         : state.auth.statusText,
+  isAuthenticated    : state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = (dispatch) => ({

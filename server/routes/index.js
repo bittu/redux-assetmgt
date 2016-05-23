@@ -27,6 +27,8 @@ router.post('/api/employee/:employeeID/asset', employeeAsset.save);
 router.put('/api/employee/:employeeID/asset/:assetID', employeeAsset.update);
 router.delete('/api/employee/:employeeID/asset/:assetID', employeeAsset.delete);
 
+router.get('/api/employee/:employeeID', employee.getData);
+
 /*
  * Routes that can be accessed only by authenticated & authorized users
  */

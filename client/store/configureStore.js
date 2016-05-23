@@ -2,7 +2,7 @@ import rootReducer from '../reducers';
 import thunk from 'redux-thunk';
 import routes from '../routes';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import {applyMiddleware, compose, createStore} from 'redux';
+import {applyMiddleware, createStore} from 'redux';
 import createLogger from 'redux-logger';
 import { syncHistory } from 'react-router-redux'
 

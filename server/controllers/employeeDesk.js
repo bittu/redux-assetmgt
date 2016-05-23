@@ -19,7 +19,7 @@ var employeeDeskCtrl = {
 		var deskNo = req.body.payload.DeskNo;
 
 		var employeeDesk = new EmployeeDesk();
-		employeeDesk.employeeID = employeeID;
+		employeeDesk.EmployeeID = employeeID;
 		employeeDesk.DeskNo = deskNo;
 
 		employeeDesk.save(function(err) {
