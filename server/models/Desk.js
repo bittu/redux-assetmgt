@@ -10,8 +10,8 @@ var DeskSchema = new Schema({
 	},
 	Wing: {
 		type: Schema.Types.ObjectId,
-    	ref: 'Wing',
-    	required: true
+  	ref: 'Wing',
+  	required: true
 	}
 }, {
 	collection: 'Desk',
