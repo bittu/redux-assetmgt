@@ -3,17 +3,22 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions';
 
-import DeskCard from '../components/DeskCard';
+import DeskCard from '../components/dashboard/DeskCard';
 
 class UserDashboard extends React.Component {
 
   componentWillMount () {
     this.fetchData();
+    this.updateTitle();
   }
 
   fetchData () {
     let token = this.props.authData.token;
     this.props.actions.userData(token, this.props.authData.employee._id);
+  }
+
+  updateTitle() {
+    this.props.updateTitle('User Dashboard');
   }
 
   render () {

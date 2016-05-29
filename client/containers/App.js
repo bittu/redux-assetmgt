@@ -1,30 +1,31 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {logoutAndRedirect} from '../actions';
+
+import Header from '../components/Header';
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: ''
+    };
+    this.updateTitle = this.updateTitle.bind(this);
+  }
+
+  updateTitle(title) {
+    this.setState({title: title});
+  }
+
   render () {
 
-    const { dispatch } = this.props;
+    const { dispatch, isAuthenticated, employee } = this.props;
 
     return (
       <div className="height100">
-        {this.props.isAuthenticated ?
-        (<div className="navbar-fixed">
-          <nav>
-            <div className="nav-wrapper blue darken-1">
-              <a className="brand-logo">g</a>
-                <ul className="right">
-                  <li>{this.props.employee.EmployeeID}</li>
-                  <li><a href='#' onClick={() => this.props.dispatch(logoutAndRedirect())}>Logout</a></li>
-                </ul>
-            </div>
-          </nav>
-        </div>) : ''}
-        {this.props.children}
+        <Header isAuthenticated={isAuthenticated} dispatch={dispatch} employee={employee} title={this.state.title}/>
+        {React.cloneElement(this.props.children, {updateTitle: this.updateTitle})}
       </div>
     );
   }
